@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { User } from '@prisma/client';
 import { CreateUserParams } from './types';
-// import { ProfileService } from '../profile/profile.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
-    // private readonly profileService: ProfileService,
+    private readonly profileService: ProfileService,
   ) {}
 
   async createUser(params: CreateUserParams): Promise<User> {
@@ -23,7 +23,7 @@ export class UserService {
       },
     });
 
-    // await this.profileService.createProfileForUser(user.id);
+    await this.profileService.createProfileForUser(user.id);
 
     return user;
   }
