@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/main-service-client';
+import { PrismaClient } from '@prisma/lessons-service-client';
 
 export const prisma = new PrismaClient({});
 

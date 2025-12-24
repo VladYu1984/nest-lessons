@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { Profile } from '@prisma/client';
+import { Profile } from '@prisma/main-service-client';
 import { UpdateProfileData } from './types';
 import { promises as fs } from 'fs';
 import { join } from 'path';

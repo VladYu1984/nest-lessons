@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/.prisma/lessons-service-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TableStatus {
+  available
+  no_places
+  over
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+  title String
+  description String
+
+  date        DateTime      @db.Date
+  time        String        @db.VarChar(5)
+  status      TableStatus   @default(available)
+
+  teacherId   String
+
+  students        String[]  @default([])
+  countOfStudents Int       @default(0)
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}

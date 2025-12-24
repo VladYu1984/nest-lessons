@@ -8,6 +8,15 @@
     "deleteOutDir": true
   },
   "projects": {
+    "lessons-service": {
+      "type": "application",
+      "root": "apps/lessons-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/lessons-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/lessons-service/tsconfig.app.json"
+      }
+    },
     "main-service": {
       "type": "application",
       "root": "apps/main-service",

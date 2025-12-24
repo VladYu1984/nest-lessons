@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package lessons;
+
+service LessonsService {
+  rpc GetTeacherLessons(TeacherLessonsRequest) returns (TeacherLessonsResponse);
+}
+
+message TeacherLessonsRequest {
+  string teacherId = 1;
+}
+
+message Lesson {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string date = 4;  // YYYY-MM-DD
+  string time = 5;  // HH:mm
+  string status = 6;
+}
+
+message TeacherLessonsResponse {
+  repeated Lesson lessons = 1;
+}

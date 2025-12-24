@@ -21,6 +21,13 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@prisma/main-service-client": [
+        "node_modules/.prisma/main-service-client"
+      ],
+      "@prisma/lessons-service-client": [
+        "node_modules/.prisma/lessons-service-client"
+      ]
+    }
   }
 }

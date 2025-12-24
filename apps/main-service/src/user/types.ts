@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { Role } from '@prisma/main-service-client';
 
 export interface CreateUserParams {
   email: string;
