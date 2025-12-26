@@ -10,7 +10,7 @@ async function bootstrap() {
     await NestFactory.create<NestExpressApplication>(MainServiceModule);
   app.use(cookieParser());
 
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads',
   });
 
