@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -13,7 +12,6 @@ import { RegisterDto } from './dto/register.dto';
 import type { Response } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { JWTAuthGuard } from './jwt-auth.guard';
-import { User } from '../common/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -51,12 +49,6 @@ export class AuthController {
     });
 
     return res.json({ message: 'Logged in successfully' });
-  }
-
-  @UseGuards(JWTAuthGuard)
-  @Get('me')
-  getProfile(@User() user: { id: string; email: string; role: string }) {
-    return { user };
   }
 
   @UseGuards(JWTAuthGuard)
