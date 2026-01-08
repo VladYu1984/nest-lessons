@@ -15,10 +15,14 @@ import { JWTAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, MulterError } from 'multer';
 import { extname } from 'path';
+import { UserService } from '../user/user.service';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly userService: UserService,
+  ) {}
 
   @Patch()
   @UseGuards(JWTAuthGuard)
@@ -26,7 +30,8 @@ export class ProfileController {
     @User('id') userId: string,
     @Body() dto: UpdateProfileDto,
   ) {
-    return this.profileService.updateProfile(userId, dto);
+    await this.profileService.updateProfile(userId, dto);
+    return this.userService.getUserWithProfile(userId);
   }
 
   @Patch('avatar')
@@ -41,7 +46,7 @@ export class ProfileController {
         },
       }),
       fileFilter: (_req, file, callback) => {
-        if (!file.mimetype.match(/image\/(jpg|jpeg|png)/i)) {
+        if (!file.mimetype.match(/image\/(jpg|jpeg|png|webp)/i)) {
           return callback(new MulterError('LIMIT_UNEXPECTED_FILE'), false);
         }
         callback(null, true);
