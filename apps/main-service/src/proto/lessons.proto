@@ -4,11 +4,18 @@ package lessons;
 
 service LessonsService {
   rpc GetTeacherLessons (GetTeacherLessonsRequest)
-    returns (GetTeacherLessonsResponse);
+    returns (LessonsResponse);
+
+  rpc GetStudentsLessons (GetStudentLessonsRequest)
+    returns (LessonsResponse);
 }
 
 message GetTeacherLessonsRequest {
   string teacherId = 1;
+}
+
+message GetStudentLessonsRequest {
+  string studentId = 1;
 }
 
 message Lesson {
@@ -20,7 +27,7 @@ message Lesson {
   string status = 6;
 }
 
-message GetTeacherLessonsResponse {
+message LessonsResponse {
   repeated Lesson lessons = 1;
 }
 

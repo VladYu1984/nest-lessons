@@ -29,6 +29,10 @@ export interface LessonsGrpcService {
   getTeacherLessons(data: {
     teacherId: string;
   }): Observable<{ lessons: Lesson[] }>;
+
+  getStudentsLessons(data: {
+    studentId: string;
+  }): Observable<{ lessons: Lesson[] }>;
 }
 
 export interface LessonStudentJoinedEvent {

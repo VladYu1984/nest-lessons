@@ -21,4 +21,12 @@ export class LessonsService implements OnModuleInit {
 
     return response.lessons;
   }
+
+  async getStudentsLessons(studentId: string): Promise<Lesson[]> {
+    const response = await firstValueFrom(
+      this.grpcService.getStudentsLessons({ studentId }),
+    );
+
+    return response.lessons;
+  }
 }

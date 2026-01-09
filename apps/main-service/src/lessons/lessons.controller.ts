@@ -48,9 +48,17 @@ export class LessonsController {
     };
   }
 
+  // Get Lessons for TEACHER
   @Get('my-lessons')
   async getMyLessons(@User('id') teacherId: string): Promise<Lesson[]> {
     const lessons = await this.lessonsService.getTeacherLessons(teacherId);
+    return lessons;
+  }
+
+  // Get Lessons for USER/STUDENT
+  @Get('students-lessons')
+  async getMyStudentsLessons(@User('id') studentId: string): Promise<Lesson[]> {
+    const lessons = await this.lessonsService.getStudentsLessons(studentId);
     return lessons;
   }
 

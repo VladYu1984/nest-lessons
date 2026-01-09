@@ -32,4 +32,31 @@ export class LessonsGrpcService {
       })),
     };
   }
+
+  @GrpcMethod('LessonsService', 'GetStudentsLessons')
+  async getStudentsLessons(data: {
+    studentId: string;
+  }): Promise<{ lessons: any[] }> {
+    const lessons = await this.prisma.lesson.findMany({
+      where: {
+        students: {
+          has: data.studentId,
+        },
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+
+    return {
+      lessons: lessons.map((l) => ({
+        id: l.id,
+        title: l.title,
+        description: l.description,
+        date: l.date.toISOString().split('T')[0],
+        time: l.time,
+        status: l.status,
+      })),
+    };
+  }
 }

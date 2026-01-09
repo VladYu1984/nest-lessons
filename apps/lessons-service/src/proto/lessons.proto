@@ -3,11 +3,16 @@ syntax = "proto3";
 package lessons;
 
 service LessonsService {
-  rpc GetTeacherLessons(TeacherLessonsRequest) returns (TeacherLessonsResponse);
+  rpc GetTeacherLessons(TeacherLessonsRequest) returns (LessonsResponse);
+  rpc GetStudentsLessons(GetStudentsLessonsRequest) returns (LessonsResponse);
 }
 
 message TeacherLessonsRequest {
   string teacherId = 1;
+}
+
+message GetStudentsLessonsRequest {
+  string studentId = 1;
 }
 
 message Lesson {
@@ -19,6 +24,6 @@ message Lesson {
   string status = 6;
 }
 
-message TeacherLessonsResponse {
+message LessonsResponse {
   repeated Lesson lessons = 1;
 }
