@@ -35,6 +35,7 @@ export class LessonsController {
       date: dto.date,
       time: dto.time,
       countOfStudents: dto.countOfStudents,
+      students: [],
       teacherId,
       status:
         dto.countOfStudents > 0 ? 'available' : (dto.status ?? 'available'),
@@ -48,18 +49,12 @@ export class LessonsController {
     };
   }
 
-  // Get Lessons for TEACHER
   @Get('my-lessons')
-  async getMyLessons(@User('id') teacherId: string): Promise<Lesson[]> {
-    const lessons = await this.lessonsService.getTeacherLessons(teacherId);
-    return lessons;
-  }
-
-  // Get Lessons for USER/STUDENT
-  @Get('students-lessons')
-  async getMyStudentsLessons(@User('id') studentId: string): Promise<Lesson[]> {
-    const lessons = await this.lessonsService.getStudentsLessons(studentId);
-    return lessons;
+  async getMyLessons(
+    @User('id') userId: string,
+    @User('role') role: string,
+  ): Promise<Lesson[]> {
+    return this.lessonsService.getLessonsByRole(userId, role);
   }
 
   @Patch(':id')

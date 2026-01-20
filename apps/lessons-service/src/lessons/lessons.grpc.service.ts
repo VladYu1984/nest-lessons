@@ -15,6 +15,8 @@ export class LessonsGrpcService {
       date: string;
       time: string;
       status: string;
+      countOfStudents: number;
+      students: string[];
     }[];
   }> {
     const lessons = await this.prisma.lesson.findMany({
@@ -29,6 +31,8 @@ export class LessonsGrpcService {
         date: l.date.toISOString().split('T')[0],
         time: l.time,
         status: l.status,
+        students: l.students,
+        countOfStudents: l.countOfStudents,
       })),
     };
   }

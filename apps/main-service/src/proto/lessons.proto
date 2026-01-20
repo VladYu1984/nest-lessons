@@ -6,7 +6,7 @@ service LessonsService {
   rpc GetTeacherLessons (GetTeacherLessonsRequest)
     returns (LessonsResponse);
 
-  rpc GetStudentsLessons (GetStudentLessonsRequest)
+  rpc GetStudentLessons (GetStudentLessonsRequest)
     returns (LessonsResponse);
 }
 
@@ -25,6 +25,8 @@ message Lesson {
   string date = 4;
   string time = 5;
   string status = 6;
+  repeated string students = 7;
+  int32 countOfStudents = 8;
 }
 
 message LessonsResponse {

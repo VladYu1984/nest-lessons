@@ -4,6 +4,7 @@ import { LessonsPublisher } from './lessons.publisher';
 import { LessonsService } from './lessons.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -35,6 +36,9 @@ import { join } from 'path';
         },
       },
     ]),
+
+    // modules
+    UserModule,
   ],
   controllers: [LessonsController],
   providers: [LessonsService, LessonsPublisher],

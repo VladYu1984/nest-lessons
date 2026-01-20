@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { User } from '@prisma/main-service-client';
-import { CreateUserParams } from './types';
+import { CreateUserParams, UserProfile } from './types';
 import { ProfileService } from '../profile/profile.service';
 
 @Injectable()
@@ -40,6 +40,33 @@ export class UserService {
     return user;
   }
 
+  async getUsersByIds(ids: string[]): Promise<UserProfile[]> {
+    if (ids.length === 0) return [];
+
+    const users = await this.prisma.user.findMany({
+      where: { id: { in: ids.filter((id): id is string => !!id) } },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        profile: true,
+      },
+    });
+
+    const foundIds = users.map((u) => u.id);
+    const missing = ids.filter((id) => !foundIds.includes(id));
+    if (missing.length) {
+      throw new NotFoundException(`Users not found: ${missing.join(', ')}`);
+    }
+
+    return users.map((u) => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      profile: u.profile ?? null,
+    }));
+  }
+
   async getUserWithProfile(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -50,7 +77,6 @@ export class UserService {
         role: true,
         profile: {
           select: {
-            id: true,
             about: true,
             avatarUrl: true,
           },

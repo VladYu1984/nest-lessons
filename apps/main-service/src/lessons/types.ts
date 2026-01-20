@@ -8,6 +8,7 @@ export interface LessonBase {
   date: string;
   time: string;
   countOfStudents: number;
+  students?: string[];
   status: LessonStatus;
 }
 
