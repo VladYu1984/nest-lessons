@@ -63,20 +63,17 @@ export class LessonsService implements OnModuleInit {
   ): Promise<
     (Omit<Lesson, 'students'> & { studentProfiles: UserProfile[] })[]
   > {
-    // 1️⃣ Собираем все уникальные id студентов
     const allStudentIds = lessons.flatMap((l) => l.students ?? []);
     const uniqueIds = Array.from(
       new Set(allStudentIds.filter((id): id is string => !!id)),
     );
 
-    // 2️⃣ Получаем профили студентов
     const students: UserProfile[] = uniqueIds.length
       ? await this.userService.getUsersByIds(uniqueIds)
       : [];
 
     const studentsMap = new Map(students.map((u) => [u.id, u]));
 
-    // 3️⃣ Возвращаем уроки с studentProfiles
     return lessons.map((l) => ({
       id: l.id,
       title: l.title,
@@ -88,7 +85,7 @@ export class LessonsService implements OnModuleInit {
       teacherId: l.teacherId,
       studentProfiles: (l.students ?? [])
         .map((id) => studentsMap.get(id))
-        .filter((u): u is UserProfile => !!u), // убираем undefined
+        .filter((u): u is UserProfile => !!u),
     }));
   }
 }
